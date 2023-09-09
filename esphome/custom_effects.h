@@ -37,9 +37,9 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   static uint16_t progress = 0;
   static uint16_t reset_progress = 1000;
   static uint16_t watts_to_kw = 1000;
-  static uint16_t kw = int(watts / watts_to_kw);
-  static uint16_t active_main_leds = kw;
-  static uint16_t active_sub_led = int((watts - float(kw * watts_to_kw)) / 100);
+  uint16_t kw = int(watts / watts_to_kw);
+  uint16_t active_main_leds = kw;
+  uint16_t active_sub_led = int((watts - float(kw * watts_to_kw)) / 100);
   if (initial_run){
     it.all() = Color::BLACK;
     progress = 0;

@@ -43,7 +43,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     progress = 0;
   }
   
-  for (var i=0; i <= it.size(); i++){
+  for (int i=0; i <= it.size(); i++){
     if (active_main_leds >= i){
       it[i] = selected_color;
     } else {

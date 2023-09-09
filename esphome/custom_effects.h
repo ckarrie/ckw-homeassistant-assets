@@ -83,6 +83,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
 void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, float soc){
   power_leds(it, selected_color, initial_run, watts);
   static uint16_t blink_progress = 255;
+  static uint16_t steps_per_iteration = 5;
   static uint16_t progress = 0;
   static bool dir_up = true;
   if (initial_run){
@@ -93,17 +94,17 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   int soc_dot_led = int(soc / 10) - 1;
   
   if (dir_up){
-    progress++;
+    progress = progress + steps_per_iteration;
   } else {
-    progress--;
+    progress = progress - steps_per_iteration;
   }
   
   it[soc_dot_led] = Color(0, progress, 0);
   
-  if (progress == blink_progress){
+  if (progress > blink_progress){
     dir_up = false;
   }
-  if (progress == 0){
+  if (progress < 0){
     dir_up = true;
   }
 }

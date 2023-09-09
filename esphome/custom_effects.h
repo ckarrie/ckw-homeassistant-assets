@@ -84,7 +84,7 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   power_leds(it, selected_color, initial_run, watts);
   static uint16_t blink_progress = 255;
   static uint16_t progress = 0;
-  bool dir_up = true;
+  static bool dir_up = true;
   if (initial_run){
     progress = 0;
     dir_up = true;

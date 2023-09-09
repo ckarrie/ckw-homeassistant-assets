@@ -53,17 +53,29 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     }
   }  
 
+  for (int k = 0; k < it.size(); k++){
+    if (active_sub_led > k){
+      int sub_r = selected_color.r - selected_color.r / 2;
+      int sub_g = selected_color.g - selected_color.g / 2;
+      int sub_b = selected_color.b - selected_color.b / 2;
+      it[num_leds-k] = Color(sub_r, sub_g, sub_b);
+  }  
+
+  /*
   if (watts > watts_to_kw){
     int sub_r = selected_color.r - selected_color.r / 2;
     int sub_g = selected_color.g - selected_color.g / 2;
     int sub_b = selected_color.b - selected_color.b / 2;
     it[active_sub_led - 1] = Color(sub_r, sub_g, sub_b);
   }
+  */
 
   progress++;
   if (progress >= reset_progress){
     progress = 0;
     ESP_LOGD(TAG, "active_main_leds : %d", active_main_leds);
+    ESP_LOGD(TAG, "active_sub_led : %d", active_sub_led);
+    ESP_LOGD(TAG, "num_leds : %d", num_leds);
   }
   
 }

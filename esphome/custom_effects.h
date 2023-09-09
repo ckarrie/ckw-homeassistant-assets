@@ -101,10 +101,10 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   
   it[soc_dot_led] = Color(0, progress, 0);
   
-  if (progress > blink_progress){
+  if (progress >= blink_progress){
     dir_up = false;
   }
-  if (progress < 0){
+  if (progress <= 0){
     dir_up = true;
   }
 }

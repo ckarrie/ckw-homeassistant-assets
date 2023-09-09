@@ -82,19 +82,29 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
 
 void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, float soc){
   power_leds(it, selected_color, initial_run, watts);
-  static Color green = Color(0, 255, 0);
-  static uint16_t blink_progress = 5;
+  static uint16_t blink_progress = 255;
   static uint16_t progress = 0;
+  bool dir_up = true;
   if (initial_run){
     progress = 0;
+    dir_up = true;
   };
   
-  int soc_dot_led = int(soc / 100) - 1;
+  int soc_dot_led = int(soc / 10) - 1;
   
-  progress++;
-  if (progress >= blink_progress){
-    progress = 0;
-    it[soc_dot_led] = green;
+  if (dir_up){
+    progress++;
+  } else {
+    progress--;
+  }
+  
+  it[soc_dot_led] = Color(0, progress, 0);
+  
+  if (progress == blink_progress){
+    dir_up = false;
+  }
+  if (progress == 0){
+    dir_up = true;
   }
 }
 

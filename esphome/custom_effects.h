@@ -37,12 +37,14 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   static uint16_t progress = 0;
   static uint16_t reset_progress = 1000;
   static uint16_t watts_to_kw = 1000;
+  static uint16_t black_dot_index = 1;
   uint16_t kw = int(watts / watts_to_kw);
   uint16_t active_main_leds = kw;
   uint16_t active_sub_led = int((watts - float(kw * watts_to_kw)) / 100);
   if (initial_run){
     it.all() = Color::BLACK;
     progress = 0;
+    black_dot_index = 1;
   }
   
   for (int j = 0; j < it.size(); j++){
@@ -52,6 +54,18 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
       it[j] = Color::BLACK;
     }
   }  
+
+  if (progress % 100){
+    black_dot_index++;
+  }
+
+  if (active_main_leds > black_dot_index){
+    Color led_to_fade = it[black_dot_index].get();
+    int black_r = led_to_fade.r - led_to_fade.r / 4;
+    int black_g = led_to_fade.g - led_to_fade.g / 4;
+    int black_b = led_to_fade.b - led_to_fade.b / 4;
+    it[black_dot_index] = Color(black_r, black_g, black_b);
+  }
 
   for (int k = 0; k < it.size(); k++){
     if (active_sub_led > k){

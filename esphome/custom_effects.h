@@ -47,7 +47,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     black_dot_index = 1;
   }
   
-  for (int j = 0; j < it.size(); j++){
+  for (int j = 0; j < it.size() - 1; j++){
     if (active_main_leds > j){
       it[j] = selected_color;
     } else {
@@ -67,7 +67,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     it[black_dot_index] = Color(black_r, black_g, black_b);
   }
 
-  for (int k = 0; k < it.size(); k++){
+  for (int k = 0; k < it.size() - 1; k++){
     if (active_sub_led > k){
       int sub_r = selected_color.r - selected_color.r / 2;
       int sub_g = selected_color.g - selected_color.g / 2;

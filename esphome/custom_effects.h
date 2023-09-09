@@ -59,6 +59,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
       int sub_g = selected_color.g - selected_color.g / 2;
       int sub_b = selected_color.b - selected_color.b / 2;
       it[num_leds-k] = Color(sub_r, sub_g, sub_b);
+    }
   }  
 
   /*

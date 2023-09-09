@@ -37,14 +37,14 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   static uint16_t progress = 0;
   static uint16_t reset_progress = 1000;
   static uint16_t watts_to_kw = 1000;
-  static uint16_t black_dot_index = 1;
+  static uint16_t black_dot_index = 0;
   uint16_t kw = int(watts / watts_to_kw);
   uint16_t active_main_leds = kw;
   uint16_t active_sub_led = int((watts - float(kw * watts_to_kw)) / 100);
   if (initial_run){
     it.all() = Color::BLACK;
     progress = 0;
-    black_dot_index = 1;
+    black_dot_index = 0;
   }
   
   for (int j = 0; j < it.size() - 1; j++){
@@ -57,6 +57,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
 
   if (progress % 100){
     black_dot_index++;
+    ESP_LOGD(TAG, "black_dot_index : %d", black_dot_index);
   }
   
   for (int k = 0; k < it.size() - 1; k++){
@@ -88,6 +89,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   progress++;
   if (progress >= reset_progress){
     progress = 0;
+    black_dot_index = 0;
     ESP_LOGD(TAG, "active_main_leds : %d", active_main_leds);
     ESP_LOGD(TAG, "active_sub_led : %d", active_sub_led);
     ESP_LOGD(TAG, "num_leds : %d", num_leds);
@@ -95,6 +97,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
 }
 
 void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, float soc_percent){
+  static auto TAG = "power_leds_soc";
   power_leds(it, selected_color, initial_run, watts);
   static uint16_t blink_progress = 255;
   static uint16_t steps_per_iteration = 5;

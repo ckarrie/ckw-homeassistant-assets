@@ -55,7 +55,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     }
   }  
 
-  if (progress % 100){
+  if (progress % 100 == 0){
     black_dot_index++;
     ESP_LOGD(TAG, "black_dot_index : %d", black_dot_index);
   }

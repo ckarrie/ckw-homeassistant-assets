@@ -80,7 +80,7 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   }
 }
 
-void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, float soc){
+void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, float soc_percent){
   power_leds(it, selected_color, initial_run, watts);
   static uint16_t blink_progress = 255;
   static uint16_t steps_per_iteration = 5;
@@ -91,7 +91,9 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
     dir_up = true;
   };
   
-  int soc_dot_led = int(soc / 10) - 1;
+  //int soc_dot_led = int(soc / 10) - 1;               // 100% soc = 10 LEDs
+  int soc_dot_led = it.size() * int(soc_percent/100);  // 100% soc = 12 LEDs
+  int soc_dot_led_index = soc_dot_led - 1;
   
   if (dir_up){
     progress = progress + steps_per_iteration;
@@ -99,7 +101,7 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
     progress = progress - steps_per_iteration;
   }
   
-  it[soc_dot_led] = Color(0, progress, 0);
+  it[soc_dot_led_index] = Color(0, progress, 0);
   
   if (progress >= blink_progress){
     dir_up = false;

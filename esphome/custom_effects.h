@@ -80,8 +80,8 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   }
 }
 
-void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, flot soc){
-  power_leds(&it, &selected_color, initial_run, watts);
+void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, float soc){
+  power_leds(it, selected_color, initial_run, watts);
   static Color green = Color(0, 255, 0);
   static uint16_t blink_progress = 5;
   static uint16_t progress = 0;

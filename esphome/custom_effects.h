@@ -1,4 +1,4 @@
-void update_power_leds(AddressableLight &it, ESPColor &selected_color, bool initial_run, float watts){
+void update_power_leds(AddressableLight &it, Color &selected_color, bool initial_run, float watts){
   static uint16_t num_leds = it.size();
   static uint16_t progress = 0;
   static uint16_t reset_progress = 100;

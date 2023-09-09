@@ -32,9 +32,10 @@ light:
 
 
 void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, float watts){
+  static auto TAG = "power_leds";
   static uint16_t num_leds = it.size();
   static uint16_t progress = 0;
-  static uint16_t reset_progress = 10;
+  static uint16_t reset_progress = 1000;
   static uint16_t watts_to_kw = 1000;
   static uint16_t kw = int(watts / watts_to_kw);
   static uint16_t active_main_leds = kw;
@@ -43,13 +44,20 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     progress = 0;
   }
   
-  for (int i=0; i <= it.size(); i++){
-    if (active_main_leds >= i){
-      it[i] = selected_color;
+  for (int j = 0; j < it.size(); j++){
+    if (active_main_leds > j){
+      it[j] = selected_color;
     } else {
-      it[i] = Color::BLACK;
+      it[j] = Color::BLACK;
     }
   }  
+
+  progress++;
+  if (progress >= reset_progress){
+    progress = 0;
+    ESP_LOGD(TAG, "active_main_leds : %d", active_main_leds);
+  }
+  
 }
 
 

@@ -78,8 +78,26 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     ESP_LOGD(TAG, "active_sub_led : %d", active_sub_led);
     ESP_LOGD(TAG, "num_leds : %d", num_leds);
   }
-  
 }
+
+void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_run, float watts, flot soc){
+  power_leds(&it, &selected_color, initial_run, watts);
+  static Color green = Color(0, 255, 0);
+  static uint16_t blink_progress = 5;
+  static uint16_t progress = 0;
+  if (initial_run){
+    progress = 0;
+  };
+  
+  int soc_dot_led = int(soc / 100) - 1;
+  
+  progress++;
+  if (progress >= blink_progress){
+    progress = 0;
+    it[soc_dot_led] = green;
+  }
+}
+
 
 
 void blink_leds(AddressableLight &it, Color &selected_color, bool initial_run, float watts){

@@ -109,7 +109,7 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   };
   
   //int soc_dot_led = int(soc / 10) - 1;               // 100% soc = 10 LEDs
-  int soc_dot_led = it.size() * int(soc_percent/100);  // 100% soc = 12 LEDs
+  int soc_dot_led = it.size() * int(soc_percent * 100);  // 100% soc = 12 LEDs
   int soc_dot_led_index = soc_dot_led - 1;
   
   if (dir_up){

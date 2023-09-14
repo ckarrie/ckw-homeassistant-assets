@@ -122,6 +122,8 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   
   if (progress >= blink_progress){
     dir_up = false;
+    ESP_LOGD(TAG, "soc_dot_led_index : %d", soc_dot_led_index);
+    ESP_LOGD(TAG, "soc_percent : %d", soc_percent);
   }
   if (progress <= 0){
     dir_up = true;

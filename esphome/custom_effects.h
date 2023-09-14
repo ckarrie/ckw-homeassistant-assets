@@ -100,6 +100,7 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   static auto TAG = "power_leds_soc";
   power_leds(it, selected_color, initial_run, watts);
   static uint16_t blink_progress = 255;
+  static uint16_t blink_dir_up_progress = 50;
   static uint16_t steps_per_iteration = 5;
   static uint16_t progress = 0;
   static bool dir_up = true;
@@ -109,7 +110,8 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   };
   
   //int soc_dot_led = int(soc / 10) - 1;               // 100% soc = 10 LEDs
-  int soc_dot_led = it.size() * int(soc_percent * 100);  // 100% soc = 12 LEDs
+  //int soc_dot_led = it.size() * int(soc_percent * 100);  // 100% soc = 12 LEDs
+  int soc_dot_led = 1;
   int soc_dot_led_index = soc_dot_led - 1;
   
   if (dir_up){
@@ -125,7 +127,7 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
     ESP_LOGD(TAG, "soc_dot_led_index : %d", soc_dot_led_index);
     ESP_LOGD(TAG, "soc_percent : %d", soc_percent);
   }
-  if (progress <= 0){
+  if (progress <= blink_dir_up_progress){
     dir_up = true;
   }
 }

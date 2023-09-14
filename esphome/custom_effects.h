@@ -55,9 +55,9 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
     }
   }  
 
-  if (progress % 100 == 0){
+  if (progress % 25 == 0){
     black_dot_index++;
-    ESP_LOGD(TAG, "black_dot_index : %d", black_dot_index);
+    //ESP_LOGD(TAG, "black_dot_index : %d", black_dot_index);
   }
   
   for (int k = 0; k < it.size() - 1; k++){
@@ -71,9 +71,9 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
 
   if (active_sub_led > black_dot_index){
     Color led_to_fade = it[black_dot_index].get();
-    int black_r = led_to_fade.r - led_to_fade.r / 4;
-    int black_g = led_to_fade.g - led_to_fade.g / 4;
-    int black_b = led_to_fade.b - led_to_fade.b / 4;
+    int black_r = led_to_fade.r - led_to_fade.r / 2;
+    int black_g = led_to_fade.g - led_to_fade.g / 2;
+    int black_b = led_to_fade.b - led_to_fade.b / 2;
     it[black_dot_index] = Color(black_r, black_g, black_b);
   }
 

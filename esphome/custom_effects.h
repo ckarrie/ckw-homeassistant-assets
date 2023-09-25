@@ -62,18 +62,18 @@ void power_leds(AddressableLight &it, Color &selected_color, bool initial_run, f
   
   for (int k = 0; k < it.size() - 1; k++){
     if (active_sub_led > k){
-      int sub_r = selected_color.r - selected_color.r / 4;
-      int sub_g = selected_color.g - selected_color.g / 4;
-      int sub_b = selected_color.b - selected_color.b / 4;
+      int sub_r = selected_color.r - selected_color.r / 2;
+      int sub_g = selected_color.g - selected_color.g / 2;
+      int sub_b = selected_color.b - selected_color.b / 2;
       it[num_leds-k-1] = Color(sub_r, sub_g, sub_b);
     }
   }  
 
   if (active_sub_led > black_dot_index){
     Color led_to_fade = it[black_dot_index].get();
-    int black_r = led_to_fade.r - led_to_fade.r / 2;
-    int black_g = led_to_fade.g - led_to_fade.g / 2;
-    int black_b = led_to_fade.b - led_to_fade.b / 2;
+    int black_r = led_to_fade.r - led_to_fade.r / 4;
+    int black_g = led_to_fade.g - led_to_fade.g / 4;
+    int black_b = led_to_fade.b - led_to_fade.b / 4;
     it[black_dot_index] = Color(black_r, black_g, black_b);
   }
 
@@ -109,7 +109,7 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   };
   
   //int soc_dot_led = int(soc / 10) - 1;               // 100% soc = 10 LEDs
-  int soc_dot_led = it.size() * int(soc_percent * 100);  // 100% soc = 12 LEDs
+  int soc_dot_led = it.size() * int(soc_percent/100);  // 100% soc = 12 LEDs
   int soc_dot_led_index = soc_dot_led - 1;
   
   if (dir_up){
@@ -122,8 +122,8 @@ void power_leds_soc(AddressableLight &it, Color &selected_color, bool initial_ru
   
   if (progress >= blink_progress){
     dir_up = false;
-    ESP_LOGD(TAG, "soc_dot_led_index : %d", soc_dot_led_index);
-    ESP_LOGD(TAG, "soc_percent : %d", soc_percent);
+    //ESP_LOGD(TAG, "soc_dot_led_index : %d", soc_dot_led_index);
+    //ESP_LOGD(TAG, "soc_percent : %d", soc_percent);
   }
   if (progress <= 0){
     dir_up = true;

@@ -35,7 +35,6 @@ blueprint:
       default: []
       selector:
         action: {}
-  source_url:
 mode: restart
 max_exceeded: silent
 trigger:

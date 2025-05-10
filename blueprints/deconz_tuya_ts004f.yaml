@@ -1,0 +1,61 @@
+blueprint:
+  name: deCONZ - Tuya TS004F Scene Switch
+  description: Automate your Moes 4 button Scene Switch remote using deCONZ events.
+  domain: automation
+  input:
+    device_tuya_ts004f:
+      name: Tuya TS004F Scene Switch
+      description: Tuya TS004F 4 button switch
+      selector:
+        device:
+          integration: deconz
+          manufacturer: _TZ3000_xabckq1v
+          model: TS004F
+    button_one_single_press:
+      name: Button 1 (single press)
+      description: Action to run on button 1 single press
+      default: []
+      selector:
+        action: {}
+    button_two_single_press:
+      name: Button 2 (single press)
+      description: Action to run on button 2 single press
+      default: []
+      selector:
+        action: {}
+    button_three_single_press:
+      name: Button 3 (single press)
+      description: Action to run on button 3 single press
+      default: []
+      selector:
+        action: {}
+    button_four_single_press:
+      name: Button 4 (single press)
+      description: Action to run on button 4 single press
+      default: []
+      selector:
+        action: {}
+  source_url:
+mode: restart
+max_exceeded: silent
+trigger:
+- platform: event
+  event_type: deconz_event
+  event_data:
+    device_id: !input 'device_tuya_ts004f'
+action:
+- variables:
+    event: '{{ trigger.event.data.event }}'
+- choose:
+  - conditions:
+    - '{{ event == 1002 }}'
+    sequence: !input 'button_one_single_press'
+  - conditions:
+    - '{{ event == 2002 }}'
+    sequence: !input 'button_two_single_press'
+  - conditions:
+    - '{{ event == 3002 }}'
+    sequence: !input 'button_three_single_press'
+  - conditions:
+    - '{{ event == 4002 }}'
+    sequence: !input 'button_four_single_press'
